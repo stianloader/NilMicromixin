@@ -14,10 +14,10 @@ import de.geolykt.micromixin.internal.util.Objects;
 import de.geolykt.micromixin.supertypes.ASMClassWrapperProvider;
 import de.geolykt.micromixin.supertypes.ClassWrapperPool;
 
+import nilloader.api.ASMTransformer;
 import nilloader.api.ClassTransformer;
 import nilloader.api.NilLogger;
 import nilloader.api.lib.asm.ClassReader;
-import nilloader.api.lib.asm.ClassWriter;
 import nilloader.api.lib.asm.tree.ClassNode;
 
 public class NilMicromixin implements Runnable {
@@ -58,26 +58,17 @@ public class NilMicromixin implements Runnable {
 
     @Override
     public void run() {
-        ClassTransformer.register(new ClassTransformer() {
+        ClassTransformer.register(new ASMTransformer() {
+            @SuppressWarnings("null")
             @Override
-            public byte[] transform(String className, byte[] originalData) {
-                // Nilloader's ASM ClassNode writing is broken beyond repair - so we have to do it ourselves.
-                if (!NilMicromixin.TRANSFORMER.isMixinTarget(Objects.requireNonNull(className))) {
-                    return originalData;
-                }
-                ClassReader reader = new ClassReader(originalData);
-                ClassNode node = new ClassNode();
-                reader.accept(node, 0);
-                NilMicromixin.TRANSFORMER.transform((org.objectweb.asm.tree.ClassNode) (Object) node);
-                ClassWriter writer = new ClassWriter(reader, ClassWriter.COMPUTE_FRAMES) {
-                    @SuppressWarnings("null")
-                    @Override
-                    protected String getCommonSuperClass(String type1, String type2) {
-                        return CLASS_WRAPPER_POOL.getCommonSuperClass(CLASS_WRAPPER_POOL.get(type1), CLASS_WRAPPER_POOL.get(type2)).getName();
-                    }
-                };
-                node.accept(writer);
-                return writer.toByteArray();
+            public boolean transform(ClassLoader loader, ClassNode clazz) {
+                NilMicromixin.TRANSFORMER.transform((org.objectweb.asm.tree.ClassNode) (Object) clazz);
+                return true;
+            }
+
+            @Override
+            public boolean canTransform(ClassLoader loader, String className) {
+                return NilMicromixin.TRANSFORMER.isMixinTarget(Objects.requireNonNull(className));
             }
         });
     }

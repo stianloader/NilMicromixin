@@ -1,0 +1,114 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>de.geolykt</groupId>
+    <artifactId>nilmm</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>NilMM</name>
+    <description>Micromixin support for Nilloader</description>
+
+    <repositories>
+        <repository>
+            <url>https://repo.sleeping.town</url>
+            <id>sleepingtown</id>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>de.geolykt.starloader</groupId>
+            <artifactId>micromixin-transformer</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <!-- Already provided by nilloader - don't shade twice. -->
+                    <groupId>org.ow2.asm</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.unascribed</groupId>
+            <artifactId>nilloader</artifactId>
+            <version>1.3.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Readd removed compile-time dependencies -->
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>24.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm-tree</artifactId>
+            <version>9.4</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Nilloader doesn't shade that dependency - this will blow up in our face - but no risk - no fun -->
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm-util</artifactId>
+            <version>[9,9.999]</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <defaultGoal>clean package</defaultGoal>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>.</directory>
+                <includes>
+                    <include>LICENSE.md</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+                <configuration>
+                    <!-- While Java 11+ are my preferred versions, I have come to the conclusion that the userbase simply isn't there to support such a move. -->
+                    <target>1.8</target>
+                    <source>1.8</source>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.4.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <!-- Relocate traditional ASM to NilLoader's shaded ASM -->
+                <configuration>
+                    <relocations>
+                        <relocation>
+                            <pattern>org.objectweb.asm</pattern>
+                            <shadedPattern>nilloader.api.lib.asm</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>org.json</pattern>
+                            <shadedPattern>de.geolykt.nilmm.internal.dependency.json</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

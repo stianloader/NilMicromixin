@@ -1,12 +1,10 @@
 @nilmod {
-	/* There is no id field. The filename defines the id of the mod. */
 	name: "NilMicromixin";
 	description: "Micromixin support for NilLoader.";
-	authors: "geolykt";
+	authors: "Geolykt";
 	version: "${version}";
 }
 
 entrypoints {
-	/* premain is the only entrypoint defined by NilLoader itself. */
 	premain: "de.geolykt.nilmm.NilMicromixin";
 }

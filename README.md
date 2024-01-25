@@ -1,4 +1,4 @@
-# NilMM / NilMicromixin
+# NilMM / micromixin-platform-nilloader
 
 NilMM is a nilmod that integrates Micromixin support for Nilloader.
 
@@ -14,21 +14,25 @@ of the source mod.
 
 ## Maven coordinates
 
-As of now, NilMM and the Micromixin framework overall is not hosted
-at a maven repository. It must be built manually using maven.
-
 NilMM can be declared as a dependency in maven through follows:
 
 ```xml
+        <repository>
+            <id>stianloader</id>
+            <url>https://stianloader.org/maven</url>
+        </repository>
+
+        <!-- [...] -->
+
         <dependency>
-            <groupId>de.geolykt.starloader</groupId>
-            <artifactId>nilmm</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <groupId>org.stianloader</groupId>
+            <artifactId>micromixin-platform-nilloader</artifactId>
+            <version>0.1.0-a20240125</version>
             <scope>provided</scope>
         </dependency>
 ```
 
-
-
-
-
+Hint: Chances are you may also want to depend on the micromixin-annotations
+artifact. NilMM only ships the transformer and runtime modules.
+For more information about micromixin's modularity, see it's repository and
+the attached documentation.

@@ -6,5 +6,5 @@
 }
 
 entrypoints {
-	premain: "de.geolykt.nilmm.NilMicromixin";
+	premain: "org.stianloader.nilmm.NilMicromixin";
 }

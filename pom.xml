@@ -1,24 +1,31 @@
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>de.geolykt.starloader</groupId>
-    <artifactId>nilmm</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>NilMM</name>
+    <groupId>org.stianloader</groupId>
+    <artifactId>micromixin-platform-nilloader</artifactId>
+    <version>0.1.0</version>
+    <name>Micromixin Platform Nilloader</name>
     <description>Micromixin support for Nilloader</description>
+
+    <properties>
+        <micromixin-version>0.2.0-a20240118</micromixin-version>
+    </properties>
 
     <repositories>
         <repository>
-            <url>https://repo.sleeping.town</url>
             <id>sleepingtown</id>
+            <url>https://repo.sleeping.town</url>
+        </repository>
+        <repository>
+            <id>stianloader</id>
+            <url>https://stianloader.org/maven</url>
         </repository>
     </repositories>
 
     <dependencies>
         <dependency>
-            <groupId>de.geolykt.starloader</groupId>
+            <groupId>org.stianloader</groupId>
             <artifactId>micromixin-transformer</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${micromixin-version}</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
@@ -29,16 +36,16 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>de.geolykt.starloader</groupId>
+            <groupId>org.stianloader</groupId>
             <artifactId>micromixin-runtime</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${micromixin-version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>com.unascribed</groupId>
             <artifactId>nilloader</artifactId>
-            <version>1.3.2</version>
+            <version>1.3.3</version>
             <scope>provided</scope>
         </dependency>
 
@@ -83,17 +90,16 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
+                <version>3.12.1</version>
                 <configuration>
-                    <!-- While Java 11+ are my preferred versions, I have come to the conclusion that the userbase simply isn't there to support such a move. -->
-                    <target>1.8</target>
-                    <source>1.8</source>
+                    <target>1.6</target>
+                    <source>1.6</source>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.4.1</version>
+                <version>3.5.1</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -114,6 +120,15 @@
                             <shadedPattern>de.geolykt.nilmm.internal.dependency.json</shadedPattern>
                         </relocation>
                     </relocations>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>**/module-info.class</exclude>
+                                <exclude>META-INF/MANIFEST.MF</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
                 </configuration>
             </plugin>
         </plugins>

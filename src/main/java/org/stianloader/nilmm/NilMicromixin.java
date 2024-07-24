@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.jetbrains.annotations.NotNull;
-import org.stianloader.micromixin.BytecodeProvider;
-import org.stianloader.micromixin.MixinConfig;
-import org.stianloader.micromixin.MixinConfig.InvalidMixinConfigException;
-import org.stianloader.micromixin.MixinTransformer;
-import org.stianloader.micromixin.supertypes.ClassWrapperPool;
+import org.stianloader.micromixin.transform.api.BytecodeProvider;
+import org.stianloader.micromixin.transform.api.MixinConfig;
+import org.stianloader.micromixin.transform.api.MixinConfig.InvalidMixinConfigException;
+import org.stianloader.micromixin.transform.api.MixinTransformer;
+import org.stianloader.micromixin.transform.api.supertypes.ClassWrapperPool;
 
 import nilloader.NilAgent;
 import nilloader.api.lib.asm.ClassReader;

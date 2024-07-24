@@ -10,7 +10,8 @@ The `String` argument is the content of the Mixin config, the `ClassLoader`
 is the modularity attachment used for Micromixin. It should be the classloader
 of the source mod.
 
-<b>Mixin configs are not automatically searched for.</b>
+<b>Mixin configs are not automatically searched for.</b> They need to be
+specified manually using above steps.
 
 ## Maven coordinates
 
@@ -27,7 +28,7 @@ NilMM can be declared as a dependency in maven through follows:
         <dependency>
             <groupId>org.stianloader</groupId>
             <artifactId>micromixin-platform-nilloader</artifactId>
-            <version>0.1.0-a20240125</version>
+            <version>0.2.0-a20240724</version>
             <scope>provided</scope>
         </dependency>
 ```

@@ -7,8 +7,8 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.objectweb.asm.tree.ClassNode;
-import org.stianloader.micromixin.BytecodeProvider;
-import org.stianloader.micromixin.supertypes.ASMClassWrapperProvider;
+import org.stianloader.micromixin.transform.api.BytecodeProvider;
+import org.stianloader.micromixin.transform.api.supertypes.ASMClassWrapperProvider;
 
 public class BytecodeProviderClassWrapperProvider extends ASMClassWrapperProvider {
 

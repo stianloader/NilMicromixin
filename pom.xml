@@ -2,12 +2,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.stianloader</groupId>
     <artifactId>micromixin-platform-nilloader</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
     <name>Micromixin Platform Nilloader</name>
     <description>Micromixin support for Nilloader</description>
 
     <properties>
-        <micromixin-version>0.2.0-a20240118</micromixin-version>
+        <micromixin-version>0.6.1-a20240713</micromixin-version>
     </properties>
 
     <repositories>
@@ -53,8 +53,9 @@
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>24.0.0</version>
+            <version>24.0.1</version>
             <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.ow2.asm</groupId>

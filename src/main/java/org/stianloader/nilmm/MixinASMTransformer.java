@@ -1,8 +1,6 @@
 package org.stianloader.nilmm;
 
-import java.io.PrintWriter;
-
-import org.stianloader.micromixin.MixinTransformer;
+import org.stianloader.micromixin.transform.api.MixinTransformer;
 
 import nilloader.api.ClassTransformer;
 import nilloader.api.lib.asm.ClassReader;
